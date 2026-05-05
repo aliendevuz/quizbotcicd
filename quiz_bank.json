@@ -1,0 +1,195 @@
+{
+  "version": "v1",
+  "questions": [
+    {
+      "id": 1,
+      "question": "2 + 2 nechiga teng?",
+      "type": "multiple_choice",
+      "options": ["3", "4", "5", "6"],
+      "correct_option": 1
+    },
+    {
+      "id": 2,
+      "question": "O'zbekiston poytaxti qayer?",
+      "type": "multiple_choice",
+      "options": ["Samarqand", "Buxoro", "Tashkent", "Andijon"],
+      "correct_option": 2
+    },
+    {
+      "id": 3,
+      "question": "Quyidagilardan qaysi biri programming language?",
+      "type": "multiple_choice",
+      "options": ["HTML", "Python", "CSS", "Figma"],
+      "correct_option": 1
+    },
+    {
+      "id": 4,
+      "question": "AWS Lambda nima?",
+      "type": "multiple_choice",
+      "options": [
+        "Database",
+        "Serverless function service",
+        "Operating system",
+        "Browser"
+      ],
+      "correct_option": 1
+    },
+    {
+      "id": 5,
+      "question": "CI/CD nimani anglatadi?",
+      "type": "multiple_choice",
+      "options": [
+        "Code Integration / Code Deployment",
+        "Continuous Integration / Continuous Delivery",
+        "Cloud Infrastructure / Cloud Data",
+        "Computer Input / Computer Data"
+      ],
+      "correct_option": 1
+    },
+    {
+      "id": 6,
+      "question": "Git nima?",
+      "type": "multiple_choice",
+      "options": [
+        "Database",
+        "Version control system",
+        "Web server",
+        "Programming language"
+      ],
+      "correct_option": 1
+    },
+    {
+      "id": 7,
+      "question": "Quyidagilardan qaysi biri frontend kutubxonasi?",
+      "type": "multiple_choice",
+      "options": ["Django", "React", "Spring", "FastAPI"],
+      "correct_option": 1
+    },
+    {
+      "id": 8,
+      "question": "HTTP methodlardan qaysi biri mavjud?",
+      "type": "multiple_choice",
+      "options": ["RUN", "GET", "MAKE", "BUILD"],
+      "correct_option": 1
+    },
+    {
+      "id": 9,
+      "question": "Docker nima?",
+      "type": "multiple_choice",
+      "options": [
+        "Browser",
+        "Container platform",
+        "Text editor",
+        "Operating system"
+      ],
+      "correct_option": 1
+    },
+    {
+      "id": 10,
+      "question": "Quyidagilardan qaysi biri database?",
+      "type": "multiple_choice",
+      "options": ["PostgreSQL", "HTML", "CSS", "Git"],
+      "correct_option": 0
+    },
+    {
+      "id": 11,
+      "question": "AWS EC2 nima?",
+      "type": "multiple_choice",
+      "options": [
+        "Virtual server",
+        "Database",
+        "Mobile app",
+        "Browser"
+      ],
+      "correct_option": 0
+    },
+    {
+      "id": 12,
+      "question": "JSON nima?",
+      "type": "multiple_choice",
+      "options": [
+        "Programming language",
+        "Data format",
+        "Operating system",
+        "Web server"
+      ],
+      "correct_option": 1
+    },
+    {
+      "id": 13,
+      "question": "Quyidagilardan qaysi biri cloud provider?",
+      "type": "multiple_choice",
+      "options": ["AWS", "Linux", "Git", "Nginx"],
+      "correct_option": 0
+    },
+    {
+      "id": 14,
+      "question": "API nimani anglatadi?",
+      "type": "multiple_choice",
+      "options": [
+        "Application Programming Interface",
+        "Advanced Program Input",
+        "Application Process Integration",
+        "Automatic Program Interface"
+      ],
+      "correct_option": 0
+    },
+    {
+      "id": 15,
+      "question": "Quyidagilardan qaysi biri version control platform?",
+      "type": "multiple_choice",
+      "options": ["GitHub", "Docker", "AWS", "Postman"],
+      "correct_option": 0
+    },
+    {
+      "id": 16,
+      "question": "Linux nima?",
+      "type": "multiple_choice",
+      "options": [
+        "Operating system",
+        "Programming language",
+        "Browser",
+        "Database"
+      ],
+      "correct_option": 0
+    },
+    {
+      "id": 17,
+      "question": "Quyidagilardan qaysi biri web server?",
+      "type": "multiple_choice",
+      "options": ["Nginx", "React", "Python", "Figma"],
+      "correct_option": 0
+    },
+    {
+      "id": 18,
+      "question": "Serverless nima?",
+      "type": "multiple_choice",
+      "options": [
+        "Server yo'q degani",
+        "Server boshqarilmaydi (managed)",
+        "Faqat frontend ishlaydi",
+        "Internet yo'q"
+      ],
+      "correct_option": 1
+    },
+    {
+      "id": 19,
+      "question": "Quyidagilardan qaysi biri testing framework?",
+      "type": "multiple_choice",
+      "options": ["Pytest", "HTML", "CSS", "AWS"],
+      "correct_option": 0
+    },
+    {
+      "id": 20,
+      "question": "GitHub Actions nima?",
+      "type": "multiple_choice",
+      "options": [
+        "CI/CD tool",
+        "Database",
+        "Browser",
+        "Operating system"
+      ],
+      "correct_option": 0
+    }
+  ]
+}
