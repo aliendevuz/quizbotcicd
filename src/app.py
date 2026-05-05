@@ -4,7 +4,7 @@ import os
 import random
 import urllib.request
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
 
 DEFAULT_QUIZ_PATH = Path(__file__).resolve().parent.parent / "quiz_bank.json"
 
@@ -28,14 +28,16 @@ def pick_random_question(questions: List[Dict[str, Any]], rng: Optional[random.R
     return chooser.choice(questions)
 
 
-def format_question_text(question: Dict[str, Any]) -> str:
-    prompt = question.get("question", "")
-    options = question.get("options", [])
-    lines = [f"Savol: {prompt}"]
-    if isinstance(options, list):
-        for index, option in enumerate(options, start=1):
-            lines.append(f"{index}) {option}")
-    return "\n".join(lines)
+def normalize_poll_options(options: Any) -> List[str]:
+    if not isinstance(options, list):
+        return []
+    cleaned: List[str] = []
+    for option in options:
+        if isinstance(option, str):
+            value = option.strip()
+            if value:
+                cleaned.append(value)
+    return cleaned
 
 
 def _decode_body(event: Dict[str, Any]) -> Optional[str]:
@@ -86,10 +88,26 @@ def extract_chat_id(payload: Dict[str, Any]) -> Optional[int]:
     return None
 
 
-def send_telegram_message(token: str, chat_id: int, text: str) -> Dict[str, Any]:
+def send_telegram_poll(
+    token: str,
+    chat_id: int,
+    question_text: str,
+    options: List[str],
+    correct_option_id: Optional[int] = None,
+) -> Dict[str, Any]:
     api_root = os.environ.get("TELEGRAM_API_URL", "https://api.telegram.org")
-    url = f"{api_root}/bot{token}/sendMessage"
-    payload = json.dumps({"chat_id": chat_id, "text": text}).encode("utf-8")
+    url = f"{api_root}/bot{token}/sendPoll"
+    body: Dict[str, Any] = {
+        "chat_id": chat_id,
+        "question": question_text,
+        "options": options,
+        "type": "quiz",
+        "is_anonymous": False,
+        "allows_multiple_answers": False,
+    }
+    if correct_option_id is not None:
+        body["correct_option_id"] = correct_option_id
+    payload = json.dumps(body).encode("utf-8")
     request = urllib.request.Request(
         url,
         data=payload,
@@ -104,7 +122,11 @@ def handle_lambda_request(event: Dict[str, Any], _context: Any) -> Dict[str, Any
     quiz_path = Path(os.environ.get("QUIZ_BANK_PATH", str(DEFAULT_QUIZ_PATH)))
     bank = load_quiz_bank(quiz_path)
     question = pick_random_question(get_questions(bank))
-    text = format_question_text(question)
+    question_text = str(question.get("question", "")).strip()
+    poll_options = normalize_poll_options(question.get("options"))
+    correct_option_id = question.get("correct_option") if isinstance(question.get("correct_option"), int) else None
+    if correct_option_id is not None and not (0 <= correct_option_id < len(poll_options)):
+        correct_option_id = None
 
     payload = parse_event_body(event)
     chat_id = extract_chat_id(payload)
@@ -112,15 +134,26 @@ def handle_lambda_request(event: Dict[str, Any], _context: Any) -> Dict[str, Any
     token = os.environ.get("TELEGRAM_BOT_TOKEN")
     sent = False
     telegram_response = None
-    if token and chat_id and text:
-        telegram_response = send_telegram_message(token, chat_id, text)
+    if token and chat_id and question_text and poll_options:
+        telegram_response = send_telegram_poll(
+            token,
+            chat_id,
+            question_text,
+            poll_options,
+            correct_option_id=correct_option_id,
+        )
         sent = bool(telegram_response.get("ok")) if isinstance(telegram_response, dict) else True
 
     body = {
         "ok": True,
         "sent": sent,
-        "message": text,
+        "message": question_text,
         "question": question,
+        "poll": {
+            "question": question_text,
+            "options": poll_options,
+            "correct_option_id": correct_option_id,
+        },
     }
     if telegram_response is not None:
         body["telegram"] = telegram_response

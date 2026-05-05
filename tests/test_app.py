@@ -29,14 +29,12 @@ def test_pick_random_question_is_deterministic() -> None:
     assert picked["question"] == "First?"
 
 
-def test_format_question_text() -> None:
-    question = {"question": "Hello?", "options": ["Yes", "No"]}
+def test_normalize_poll_options() -> None:
+    options = ["Yes", "", "  No  ", 123, None]
 
-    text = app.format_question_text(question)
+    cleaned = app.normalize_poll_options(options)
 
-    assert "Savol: Hello?" in text
-    assert "1) Yes" in text
-    assert "2) No" in text
+    assert cleaned == ["Yes", "No"]
 
 
 def test_parse_event_body_base64() -> None:
@@ -62,4 +60,6 @@ def test_handle_lambda_request_without_token(monkeypatch: pytest.MonkeyPatch, tm
 
     assert response["statusCode"] == 200
     assert body["sent"] is False
-    assert "Savol: Test?" in body["message"]
+    assert body["message"] == "Test?"
+    assert body["poll"]["question"] == "Test?"
+    assert body["poll"]["options"] == ["A", "B"]
